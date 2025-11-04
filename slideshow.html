@@ -163,7 +163,7 @@
       <button class="replay-btn" id="replayBtn">Replay</button>
   </div>
 
-  <audio autoplay loop>
+  <audio id="slideshow-audio" loop>
     <source src="audio/prove-it.mp3#t=57" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
@@ -180,8 +180,25 @@
       document.body.appendChild(s);
     }
 
+    /* Music and Interaction */
+    const audio = document.getElementById('slideshow-audio');
+    let musicHasStarted = false;
+
+    function playMusic() {
+        if (musicHasStarted) return;
+        const promise = audio.play();
+        if (promise !== undefined) {
+            promise.then(() => {
+                musicHasStarted = true;
+            }).catch(error => {
+                console.error("Music autoplay was blocked.", error);
+            });
+        }
+    }
+
     /* Interactive Sparkles */
     document.body.addEventListener('click', (e) => {
+        playMusic();
         for(let i = 0; i < 10; i++) {
             const burst = document.createElement('div');
             burst.className = 'sparkle-burst';

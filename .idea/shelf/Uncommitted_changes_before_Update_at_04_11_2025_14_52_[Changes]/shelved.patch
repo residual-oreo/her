@@ -1,0 +1,814 @@
+Index: slideshow.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!doctype html>\r\n<html lang=\"en\">\r\n<head>\r\n  <meta charset=\"utf-8\" />\r\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />\r\n  <title>Your Slideshow</title>\r\n  <style>\r\n    body {\r\n      display: flex;\r\n      align-items: center;\r\n      justify-content: center;\r\n      height: 100vh;\r\n      margin: 0;\r\n      background-color: #0f1724;\r\n      color: #e6eef8;\r\n      font-family: Inter, system-ui, Segoe UI, Roboto, \"Helvetica Neue\", Arial;\r\n    }\r\n    .slideshow-container {\r\n      /* Add your slideshow styles here */\r\n      font-size: 2em;\r\n      text-align: center;\r\n    }\r\n  </style>\r\n</head>\r\n<body>\r\n  <div class=\"slideshow-container\">\r\n    <p>Your amazing slideshow goes here!</p>\r\n    <!-- You can add images or other content for the slideshow -->\r\n  </div>\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/slideshow.html b/slideshow.html
+--- a/slideshow.html	(revision 1baecd37745d42f992d9c3f74fa32d8ad161faed)
++++ b/slideshow.html	(date 1762256321025)
+@@ -3,29 +3,268 @@
+ <head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width,initial-scale=1" />
+-  <title>Your Slideshow</title>
++  <title>Certified Face Card 💖</title>
+   <style>
+-    body {
+-      display: flex;
+-      align-items: center;
+-      justify-content: center;
+-      height: 100vh;
+-      margin: 0;
+-      background-color: #0f1724;
+-      color: #e6eef8;
+-      font-family: Inter, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial;
+-    }
+-    .slideshow-container {
+-      /* Add your slideshow styles here */
+-      font-size: 2em;
+-      text-align: center;
++    :root {
++      --pink: #ff4fa3;
++      --deep-pink: #ff007f;
++      --bg1: #140010;
++      --bg2: #2a001d;
++    }
++    html, body {
++      margin: 0;
++      height: 100%;
++      overflow: hidden;
++      background: radial-gradient(circle at 20% 20%, var(--bg2), var(--bg1));
++      font-family: "Poppins", system-ui, sans-serif;
++      color: #fff;
++    }
++    .sparkle {
++      position: absolute;
++      width: 3px;
++      height: 3px;
++      background: var(--pink);
++      border-radius: 50%;
++      opacity: 0.7;
++      animation: float 6s linear infinite;
++    }
++    @keyframes float {
++      0% { transform: translateY(0) scale(1); opacity: 0.6; }
++      50% { transform: translateY(-40vh) scale(1.4); opacity: 1; }
++      100% { transform: translateY(0) scale(1); opacity: 0.6; }
++    }
++    .slideshow-container {
++      position: relative;
++      width: 100vw;
++      height: 100vh;
++      overflow: hidden;
++    }
++    .slide {
++      position: absolute;
++      inset: 0;
++      opacity: 0;
++      background-size: cover;
++      background-position: center;
++      transform: scale(1.1);
++      filter: brightness(0.9) saturate(1.15);
++      transition: opacity 2s ease-in-out;
++      animation: zoom 9s ease-in-out infinite alternate;
++    }
++    .slide.active {
++      opacity: 1;
++      z-index: 2;
++    }
++    @keyframes zoom {
++      0% { transform: scale(1.1); }
++      100% { transform: scale(1.25); }
++    }
++    .overlay {
++      position: absolute;
++      inset: 0;
++      background: radial-gradient(circle at center, rgba(255,105,180,0.12), rgba(0,0,0,0.75));
++      z-index: 3;
++      pointer-events: none;
++    }
++    .slide-text {
++      position: absolute;
++      bottom: 10%;
++      left: 50%;
++      transform: translateX(-50%);
++      font-size: 2rem;
++      font-weight: 600;
++      color: #fff;
++      text-shadow: 0 0 25px var(--pink), 0 0 50px rgba(255,105,180,0.7);
++      opacity: 0;
++      transition: opacity 1.5s ease-in-out;
++      z-index: 4;
++      white-space: nowrap;
++    }
++    .slide-text.active {
++        opacity: 1;
++    }
++    .pulse {
++      animation: pulseGlow 1.6s ease-in-out infinite alternate;
++    }
++    @keyframes pulseGlow {
++      0% { text-shadow: 0 0 15px var(--pink), 0 0 30px var(--deep-pink); }
++      100% { text-shadow: 0 0 35px var(--deep-pink), 0 0 80px var(--pink); }
++    }
++    .vignette {
++      position: absolute;
++      inset: 0;
++      background: radial-gradient(circle at center, transparent 60%, rgba(0,0,0,0.8));
++      z-index: 5;
++      pointer-events: none;
++    }
++    .sparkle-burst {
++        position: absolute;
++        width: 5px;
++        height: 5px;
++        background: white;
++        border-radius: 50%;
++        opacity: 1;
++        animation: burst 0.8s ease-out forwards;
++    }
++    @keyframes burst {
++        from { transform: scale(0); opacity: 1; }
++        to { transform: scale(2) translateY(-50px); opacity: 0; }
++    }
++    .final-message {
++        position: absolute;
++        inset: 0;
++        background: rgba(0,0,0,0.8);
++        display: flex;
++        flex-direction: column;
++        align-items: center;
++        justify-content: center;
++        text-align: center;
++        z-index: 10;
++        opacity: 0;
++        pointer-events: none;
++        transition: opacity 2s ease-in-out;
++    }
++    .final-message.active {
++        opacity: 1;
++        pointer-events: all;
++    }
++    .final-message h2 {
++        font-size: 3rem;
++        color: var(--pink);
++        text-shadow: 0 0 20px var(--pink);
++    }
++    .final-message p {
++        font-size: 1.5rem;
++        margin: 20px 0;
++    }
++    .replay-btn {
++        background: var(--pink);
++        color: white;
++        border: none;
++        border-radius: 10px;
++        padding: 10px 20px;
++        font-size: 1.2rem;
++        cursor: pointer;
++        transition: transform 0.3s;
++    }
++    .replay-btn:hover {
++        transform: scale(1.1);
+     }
+   </style>
+ </head>
+ <body>
+-  <div class="slideshow-container">
+-    <p>Your amazing slideshow goes here!</p>
+-    <!-- You can add images or other content for the slideshow -->
++  <div class="slideshow-container" id="slideshow">
++    <div class="overlay"></div>
++    <div class="vignette"></div>
+   </div>
++
++  <div class="final-message" id="finalMessage">
++      <h2>You're amazing!</h2>
++      <p>Hope you enjoyed this little surprise. ❤️</p>
++      <button class="replay-btn" id="replayBtn">Replay</button>
++  </div>
++
++  <audio autoplay loop>
++    <source src="sond/21 Savage, Summer Walker - prove it (Official Audio).mp3#t=57" type="audio/mpeg">
++    Your browser does not support the audio element.
++  </audio>
++
++  <script>
++    /* Sparkles */
++    for (let i = 0; i < 50; i++) {
++      const s = document.createElement('div');
++      s.className = 'sparkle';
++      s.style.left = Math.random() * 100 + 'vw';
++      s.style.top = Math.random() * 100 + 'vh';
++      s.style.animationDelay = Math.random() * 6 + 's';
++      s.style.animationDuration = 4 + Math.random() * 4 + 's';
++      document.body.appendChild(s);
++    }
++
++    /* Interactive Sparkles */
++    document.body.addEventListener('click', (e) => {
++        for(let i = 0; i < 10; i++) {
++            const burst = document.createElement('div');
++            burst.className = 'sparkle-burst';
++            burst.style.left = e.clientX + 'px';
++            burst.style.top = e.clientY + 'px';
++            const angle = Math.random() * 360;
++            const distance = Math.random() * 100;
++            burst.style.setProperty('--x', Math.cos(angle) * distance + 'px');
++            burst.style.setProperty('--y', Math.sin(angle) * distance + 'px');
++            document.body.appendChild(burst);
++            setTimeout(() => burst.remove(), 800);
++        }
++    });
++
++    /* Slideshow data */
++    const images = [
++      "img/Camera Roll/IMG-20251104-WA0022.jpg",
++      "img/Camera Roll/IMG-20251104-WA0023.jpg",
++      "img/Camera Roll/IMG-20251104-WA0024.jpg",
++      "img/Camera Roll/IMG-20251104-WA0025.jpg",
++      "img/Camera Roll/IMG-20251104-WA0026.jpg"
++    ];
++
++    const messages = [
++      "You already know you’re fine 😘",
++      "That smile? Illegal 💕",
++      "Every angle hits different 🔥",
++      "Certified baddie energy 💅🏽",
++      "Her face card never declines 💳💖"
++    ];
++
++    const slideshow = document.getElementById('slideshow');
++    const finalMessage = document.getElementById('finalMessage');
++    const replayBtn = document.getElementById('replayBtn');
++    let current = 0;
++    let slideshowInterval;
++
++    function showSlide() {
++      if(current >= images.length) {
++          clearInterval(slideshowInterval);
++          finalMessage.classList.add('active');
++          return;
++      }
++
++      const oldSlide = slideshow.querySelector('.slide.active');
++      const oldText = slideshow.querySelector('.slide-text.active');
++
++      const slide = document.createElement('div');
++      slide.className = 'slide';
++      slide.style.backgroundImage = `url('${images[current]}')`;
++      slideshow.appendChild(slide);
++
++      const text = document.createElement('div');
++      text.className = 'slide-text';
++      text.textContent = messages[current];
++      if (current === images.length - 1) text.classList.add('pulse');
++      slideshow.appendChild(text);
++
++      setTimeout(() => {
++          slide.classList.add('active');
++          text.classList.add('active');
++          if(oldSlide) oldSlide.classList.remove('active');
++          if(oldText) oldText.classList.remove('active');
++          setTimeout(() => {
++              if(oldSlide) oldSlide.remove();
++              if(oldText) oldText.remove();
++          }, 2000); // remove after transition
++      }, 100);
++
++      current++;
++    }
++
++    function startSlideshow() {
++        current = 0;
++        finalMessage.classList.remove('active');
++        showSlide();
++        slideshowInterval = setInterval(showSlide, 4600);
++    }
++
++    replayBtn.addEventListener('click', startSlideshow);
++
++    startSlideshow();
++  </script>
++
+ </body>
+-</html>
+\ No newline at end of file
++</html>
+Index: home.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n  <meta charset=\"UTF-8\">\r\n  <title>$Title$</title>\r\n</head>\r\n<body>\r\n$END$\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/home.html b/home.html
+--- a/home.html	(revision 1baecd37745d42f992d9c3f74fa32d8ad161faed)
++++ b/home.html	(date 1762255187887)
+@@ -1,10 +1,184 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+-  <meta charset="UTF-8">
+-  <title>$Title$</title>
++  <meta charset="UTF-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>Who Has the Best Face Card?</title>
++  <link rel="preconnect" href="https://fonts.googleapis.com">
++  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
++  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
++  <style>
++    * {
++      margin: 0;
++      padding: 0;
++      box-sizing: border-box;
++    }
++
++    body {
++      height: 100vh;
++      display: flex;
++      align-items: center;
++      justify-content: center;
++      overflow: hidden;
++      background: linear-gradient(-45deg, #ff8efb, #ffc2e2, #ffb1d6, #e4b6ff);
++      background-size: 400% 400%;
++      animation: gradient 10s ease infinite;
++      position: relative;
++      font-family: "Montserrat", sans-serif;
++      perspective: 1000px;
++    }
++
++    @keyframes gradient {
++      0% { background-position: 0% 50%; }
++      50% { background-position: 100% 50%; }
++      100% { background-position: 0% 50%; }
++    }
++
++    .sparkle {
++      position: absolute;
++      width: 4px;
++      height: 4px;
++      background: white;
++      border-radius: 50%;
++      opacity: 0.8;
++      animation: float 8s linear infinite;
++    }
++
++    @keyframes float {
++      from {
++        transform: translateY(100vh) scale(0);
++        opacity: 0;
++      }
++      to {
++        transform: translateY(-10vh) scale(1);
++        opacity: 1;
++      }
++    }
++
++    .card {
++      background: rgba(255, 255, 255, 0.2);
++      backdrop-filter: blur(15px);
++      border: 1px solid rgba(255, 255, 255, 0.4);
++      border-radius: 20px;
++      box-shadow: 0 8px 30px rgba(255, 100, 180, 0.4);
++      text-align: center;
++      padding: 40px 30px;
++      animation: fadeIn 1.5s ease forwards;
++      transition: transform 0.1s ease;
++    }
++
++    @keyframes fadeIn {
++      from { opacity: 0; transform: translateY(20px); }
++      to { opacity: 1; transform: translateY(0); }
++    }
++
++    h1 {
++      font-family: 'Playfair Display', serif;
++      color: white;
++      font-size: 2.2rem;
++      margin-bottom: 20px;
++      text-shadow: 0 0 12px rgba(255,255,255,0.6);
++      position: relative;
++      overflow: hidden;
++    }
++    
++    h1::after {
++        content: '';
++        position: absolute;
++        top: 0;
++        left: -100%;
++        width: 100%;
++        height: 100%;
++        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
++        animation: shimmer 4s infinite;
++    }
++
++    @keyframes shimmer {
++        0% { left: -100%; }
++        50% { left: 100%; }
++        100% { left: 100%; }
++    }
++
++    .options button {
++      font-family: "Montserrat", sans-serif;
++      background: rgba(255, 255, 255, 0.3);
++      border: 1px solid white;
++      border-radius: 12px;
++      color: white;
++      padding: 12px 20px;
++      margin: 8px;
++      cursor: pointer;
++      transition: all 0.3s ease;
++      font-weight: 600;
++    }
++
++    .options button:hover {
++      background: white;
++      color: #ff5fbf;
++      transform: scale(1.1) rotate(3deg);
++      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
++    }
++
++    .continue-btn {
++      margin-top: 25px;
++      background: linear-gradient(90deg, #ff66c4, #ffa6e7);
++      color: white;
++      border: none;
++      border-radius: 20px;
++      padding: 12px 30px;
++      font-size: 1rem;
++      font-weight: 700;
++      cursor: pointer;
++      box-shadow: 0 0 20px rgba(255, 102, 196, 0.5);
++      transition: all 0.3s ease;
++      animation: pulse 2s infinite;
++    }
++
++    .continue-btn:hover {
++      transform: scale(1.05);
++      box-shadow: 0 0 25px rgba(255, 102, 196, 0.7);
++    }
++
++    @keyframes pulse {
++      0%, 100% { box-shadow: 0 0 20px rgba(255,102,196,0.4); }
++      50% { box-shadow: 0 0 30px rgba(255,102,196,0.8); }
++    }
++  </style>
+ </head>
+ <body>
+-$END$
++  <div class="card">
++    <h1>Who has the best face card? 💅🏿</h1>
++    <div class="options">
++      <button>Her 😍</button>
++      <button>Also her 😭</button>
++      <button>Definitely her 💘</button>
++    </div>
++    <button class="continue-btn" onclick="nextPage()">Continue 💋</button>
++  </div>
++
++  <script>
++    // sparkle generator ✨
++    for (let i = 0; i < 30; i++) {
++      const s = document.createElement('div');
++      s.className = 'sparkle';
++      s.style.left = Math.random() * 100 + 'vw';
++      s.style.animationDelay = Math.random() * 8 + 's';
++      document.body.appendChild(s);
++    }
++
++    function nextPage() {
++      window.location.href = "slideshow.html";
++    }
++
++    // 3D tilt effect
++    const card = document.querySelector('.card');
++    document.body.addEventListener('mousemove', (e) => {
++        const { clientX, clientY } = e;
++        const { innerWidth, innerHeight } = window;
++        const x = (clientX / innerWidth - 0.5) * 30; // Tilt range
++        const y = (clientY / innerHeight - 0.5) * -30;
++        card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
++    });
++  </script>
+ </body>
+-</html>
+\ No newline at end of file
++</html>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"325e592e-f9da-472a-8e79-efd00ad348a4\" name=\"Changes\" comment=\"\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"associatedIndex\": 3\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"350g8tVC4L5CfB1x7wMVXzX5Btt\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"git-widget-placeholder\": \"master\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-e03c56caf84a-JavaScript-PY-252.23892.515\" />\r\n        <option value=\"bundled-python-sdk-7e47963ff851-f0eec537fc84-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.23892.515\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"325e592e-f9da-472a-8e79-efd00ad348a4\" name=\"Changes\" comment=\"\" />\r\n      <created>1762252253000</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1762252253000</updated>\r\n      <workItem from=\"1762252253003\" duration=\"20000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 1baecd37745d42f992d9c3f74fa32d8ad161faed)
++++ b/.idea/workspace.xml	(date 1762257155201)
+@@ -1,31 +1,76 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="SELECTIVE" />
++  </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="325e592e-f9da-472a-8e79-efd00ad348a4" name="Changes" comment="" />
++    <list default="true" id="325e592e-f9da-472a-8e79-efd00ad348a4" name="Changes" comment="">
++      <change afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/PythonProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PythonProject.iml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/home.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/slideshow.html" beforeDir="false" afterPath="$PROJECT_DIR$/slideshow.html" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="HTML File" />
++      </list>
++    </option>
++  </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
++  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
++  "lastFilter": {
++    "state": "OPEN",
++    "assignee": "residual-oreo"
++  }
++}]]></component>
++  <component name="GithubPullRequestsUISettings"><![CDATA[{
++  "selectedUrlAndAccountId": {
++    "url": "https://github.com/residual-oreo/her.git",
++    "accountId": "62888137-b646-4694-abf1-90fac678cae9"
++  }
++}]]></component>
+   <component name="ProjectColorInfo"><![CDATA[{
+   "associatedIndex": 3
+ }]]></component>
+   <component name="ProjectId" id="350g8tVC4L5CfB1x7wMVXzX5Btt" />
++  <component name="ProjectLevelVcsManager">
++    <ConfirmationsSetting value="2" id="Add" />
++  </component>
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+   <component name="PropertiesComponent"><![CDATA[{
+   "keyToString": {
++    "DefaultHtmlFileTemplate": "HTML File",
++    "JavaScript Debug.slideshow.html.executor": "Run",
+     "ModuleVcsDetector.initialDetectionPerformed": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "git-widget-placeholder": "master",
++    "last_opened_file_path": "C:/Users/Jesse Olero/PycharmProjects/PythonProject/img",
++    "node.js.detected.package.eslint": "true",
++    "node.js.detected.package.tslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.tslint": "(autodetect)",
++    "nodejs_package_manager_path": "npm",
+     "vue.rearranger.settings.migration": "true"
+   }
+ }]]></component>
++  <component name="RecentsManager">
++    <key name="CopyFile.RECENT_KEYS">
++      <recent name="C:\Users\Jesse Olero\PycharmProjects\PythonProject\img" />
++      <recent name="C:\Users\Jesse Olero\PycharmProjects\PythonProject\sond" />
++    </key>
++  </component>
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+@@ -41,7 +86,7 @@
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+       <updated>1762252253000</updated>
+-      <workItem from="1762252253003" duration="20000" />
++      <workItem from="1762252253003" duration="4811000" />
+     </task>
+     <servers />
+   </component>
+Index: index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/index.html b/index.html
+new file mode 100644
+--- /dev/null	(date 1762257121580)
++++ b/index.html	(date 1762257121580)
+@@ -0,0 +1,184 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++  <meta charset="UTF-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>Who Has the Best Face Card?</title>
++  <link rel="preconnect" href="https://fonts.googleapis.com">
++  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
++  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
++  <style>
++    * {
++      margin: 0;
++      padding: 0;
++      box-sizing: border-box;
++    }
++
++    body {
++      height: 100vh;
++      display: flex;
++      align-items: center;
++      justify-content: center;
++      overflow: hidden;
++      background: linear-gradient(-45deg, #ff8efb, #ffc2e2, #ffb1d6, #e4b6ff);
++      background-size: 400% 400%;
++      animation: gradient 10s ease infinite;
++      position: relative;
++      font-family: "Montserrat", sans-serif;
++      perspective: 1000px;
++    }
++
++    @keyframes gradient {
++      0% { background-position: 0% 50%; }
++      50% { background-position: 100% 50%; }
++      100% { background-position: 0% 50%; }
++    }
++
++    .sparkle {
++      position: absolute;
++      width: 4px;
++      height: 4px;
++      background: white;
++      border-radius: 50%;
++      opacity: 0.8;
++      animation: float 8s linear infinite;
++    }
++
++    @keyframes float {
++      from {
++        transform: translateY(100vh) scale(0);
++        opacity: 0;
++      }
++      to {
++        transform: translateY(-10vh) scale(1);
++        opacity: 1;
++      }
++    }
++
++    .card {
++      background: rgba(255, 255, 255, 0.2);
++      backdrop-filter: blur(15px);
++      border: 1px solid rgba(255, 255, 255, 0.4);
++      border-radius: 20px;
++      box-shadow: 0 8px 30px rgba(255, 100, 180, 0.4);
++      text-align: center;
++      padding: 40px 30px;
++      animation: fadeIn 1.5s ease forwards;
++      transition: transform 0.1s ease;
++    }
++
++    @keyframes fadeIn {
++      from { opacity: 0; transform: translateY(20px); }
++      to { opacity: 1; transform: translateY(0); }
++    }
++
++    h1 {
++      font-family: 'Playfair Display', serif;
++      color: white;
++      font-size: 2.2rem;
++      margin-bottom: 20px;
++      text-shadow: 0 0 12px rgba(255,255,255,0.6);
++      position: relative;
++      overflow: hidden;
++    }
++    
++    h1::after {
++        content: '';
++        position: absolute;
++        top: 0;
++        left: -100%;
++        width: 100%;
++        height: 100%;
++        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
++        animation: shimmer 4s infinite;
++    }
++
++    @keyframes shimmer {
++        0% { left: -100%; }
++        50% { left: 100%; }
++        100% { left: 100%; }
++    }
++
++    .options button {
++      font-family: "Montserrat", sans-serif;
++      background: rgba(255, 255, 255, 0.3);
++      border: 1px solid white;
++      border-radius: 12px;
++      color: white;
++      padding: 12px 20px;
++      margin: 8px;
++      cursor: pointer;
++      transition: all 0.3s ease;
++      font-weight: 600;
++    }
++
++    .options button:hover {
++      background: white;
++      color: #ff5fbf;
++      transform: scale(1.1) rotate(3deg);
++      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
++    }
++
++    .continue-btn {
++      margin-top: 25px;
++      background: linear-gradient(90deg, #ff66c4, #ffa6e7);
++      color: white;
++      border: none;
++      border-radius: 20px;
++      padding: 12px 30px;
++      font-size: 1rem;
++      font-weight: 700;
++      cursor: pointer;
++      box-shadow: 0 0 20px rgba(255, 102, 196, 0.5);
++      transition: all 0.3s ease;
++      animation: pulse 2s infinite;
++    }
++
++    .continue-btn:hover {
++      transform: scale(1.05);
++      box-shadow: 0 0 25px rgba(255, 102, 196, 0.7);
++    }
++
++    @keyframes pulse {
++      0%, 100% { box-shadow: 0 0 20px rgba(255,102,196,0.4); }
++      50% { box-shadow: 0 0 30px rgba(255,102,196,0.8); }
++    }
++  </style>
++</head>
++<body>
++  <div class="card">
++    <h1>Who has the best face card? 💅🏿</h1>
++    <div class="options">
++      <button>Her 😍</button>
++      <button>Also her 😭</button>
++      <button>Definitely her 💘</button>
++    </div>
++    <button class="continue-btn" onclick="nextPage()">Continue 💋</button>
++  </div>
++
++  <script>
++    // sparkle generator ✨
++    for (let i = 0; i < 30; i++) {
++      const s = document.createElement('div');
++      s.className = 'sparkle';
++      s.style.left = Math.random() * 100 + 'vw';
++      s.style.animationDelay = Math.random() * 8 + 's';
++      document.body.appendChild(s);
++    }
++
++    function nextPage() {
++      window.location.href = "slideshow.html";
++    }
++
++    // 3D tilt effect
++    const card = document.querySelector('.card');
++    document.body.addEventListener('mousemove', (e) => {
++        const { clientX, clientY } = e;
++        const { innerWidth, innerHeight } = window;
++        const x = (clientX / innerWidth - 0.5) * 30; // Tilt range
++        const y = (clientY / innerHeight - 0.5) * -30;
++        card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
++    });
++  </script>
++</body>
++</html>
+Index: .idea/PythonProject.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"PYTHON_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\">\r\n    <content url=\"file://$MODULE_DIR$\" />\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/PythonProject.iml b/.idea/PythonProject.iml
+--- a/.idea/PythonProject.iml	(revision 1baecd37745d42f992d9c3f74fa32d8ad161faed)
++++ b/.idea/PythonProject.iml	(date 1762252533285)
+@@ -1,8 +1,10 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <module type="PYTHON_MODULE" version="4">
+   <component name="NewModuleRootManager">
+-    <content url="file://$MODULE_DIR$" />
+-    <orderEntry type="inheritedJdk" />
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/.venv" />
++    </content>
++    <orderEntry type="jdk" jdkName="Python 3.13 (PythonProject)" jdkType="Python SDK" />
+     <orderEntry type="sourceFolder" forTests="false" />
+   </component>
+ </module>
+\ No newline at end of file
