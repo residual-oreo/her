@@ -3,29 +3,268 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Your Slideshow</title>
+  <title>Certified Face Card 💖</title>
   <style>
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+    :root {
+      --pink: #ff4fa3;
+      --deep-pink: #ff007f;
+      --bg1: #140010;
+      --bg2: #2a001d;
+    }
+    html, body {
       margin: 0;
-      background-color: #0f1724;
-      color: #e6eef8;
-      font-family: Inter, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(circle at 20% 20%, var(--bg2), var(--bg1));
+      font-family: "Poppins", system-ui, sans-serif;
+      color: #fff;
+    }
+    .sparkle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: var(--pink);
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: float 6s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      50% { transform: translateY(-40vh) scale(1.4); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 0.6; }
     }
     .slideshow-container {
-      /* Add your slideshow styles here */
-      font-size: 2em;
-      text-align: center;
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.1);
+      filter: brightness(0.9) saturate(1.15);
+      transition: opacity 2s ease-in-out;
+      animation: zoom 9s ease-in-out infinite alternate;
+    }
+    .slide.active {
+      opacity: 1;
+      z-index: 2;
+    }
+    @keyframes zoom {
+      0% { transform: scale(1.1); }
+      100% { transform: scale(1.25); }
+    }
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(255,105,180,0.12), rgba(0,0,0,0.75));
+      z-index: 3;
+      pointer-events: none;
+    }
+    .slide-text {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 0 25px var(--pink), 0 0 50px rgba(255,105,180,0.7);
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      z-index: 4;
+      white-space: nowrap;
+    }
+    .slide-text.active {
+        opacity: 1;
+    }
+    .pulse {
+      animation: pulseGlow 1.6s ease-in-out infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { text-shadow: 0 0 15px var(--pink), 0 0 30px var(--deep-pink); }
+      100% { text-shadow: 0 0 35px var(--deep-pink), 0 0 80px var(--pink); }
+    }
+    .vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 60%, rgba(0,0,0,0.8));
+      z-index: 5;
+      pointer-events: none;
+    }
+    .sparkle-burst {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        background: white;
+        border-radius: 50%;
+        opacity: 1;
+        animation: burst 0.8s ease-out forwards;
+    }
+    @keyframes burst {
+        from { transform: scale(0); opacity: 1; }
+        to { transform: scale(2) translateY(-50px); opacity: 0; }
+    }
+    .final-message {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        z-index: 10;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 2s ease-in-out;
+    }
+    .final-message.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+    .final-message h2 {
+        font-size: 3rem;
+        color: var(--pink);
+        text-shadow: 0 0 20px var(--pink);
+    }
+    .final-message p {
+        font-size: 1.5rem;
+        margin: 20px 0;
+    }
+    .replay-btn {
+        background: var(--pink);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+    .replay-btn:hover {
+        transform: scale(1.1);
     }
   </style>
 </head>
 <body>
-  <div class="slideshow-container">
-    <p>Your amazing slideshow goes here!</p>
-    <!-- You can add images or other content for the slideshow -->
+  <div class="slideshow-container" id="slideshow">
+    <div class="overlay"></div>
+    <div class="vignette"></div>
   </div>
+
+  <div class="final-message" id="finalMessage">
+      <h2>You're amazing!</h2>
+      <p>Hope you enjoyed this little surprise. ❤️</p>
+      <button class="replay-btn" id="replayBtn">Replay</button>
+  </div>
+
+  <audio autoplay loop>
+    <source src="audio/prove-it.mp3#t=57" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    /* Sparkles */
+    for (let i = 0; i < 50; i++) {
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.top = Math.random() * 100 + 'vh';
+      s.style.animationDelay = Math.random() * 6 + 's';
+      s.style.animationDuration = 4 + Math.random() * 4 + 's';
+      document.body.appendChild(s);
+    }
+
+    /* Interactive Sparkles */
+    document.body.addEventListener('click', (e) => {
+        for(let i = 0; i < 10; i++) {
+            const burst = document.createElement('div');
+            burst.className = 'sparkle-burst';
+            burst.style.left = e.clientX + 'px';
+            burst.style.top = e.clientY + 'px';
+            const angle = Math.random() * 360;
+            const distance = Math.random() * 100;
+            burst.style.setProperty('--x', Math.cos(angle) * distance + 'px');
+            burst.style.setProperty('--y', Math.sin(angle) * distance + 'px');
+            document.body.appendChild(burst);
+            setTimeout(() => burst.remove(), 800);
+        }
+    });
+
+    /* Slideshow data */
+    const images = [
+      "img/slideshow/slide-1.jpg",
+      "img/slideshow/slide-2.jpg",
+      "img/slideshow/slide-3.jpg",
+      "img/slideshow/slide-4.jpg",
+      "img/slideshow/slide-5.jpg"
+    ];
+
+    const messages = [
+      "You already know you’re fine 😘",
+      "That smile? Illegal 💕",
+      "Every angle hits different 🔥",
+      "Certified baddie energy 💅🏽",
+      "Her face card never declines 💳💖"
+    ];
+
+    const slideshow = document.getElementById('slideshow');
+    const finalMessage = document.getElementById('finalMessage');
+    const replayBtn = document.getElementById('replayBtn');
+    let current = 0;
+    let slideshowInterval;
+
+    function showSlide() {
+      if(current >= images.length) {
+          clearInterval(slideshowInterval);
+          finalMessage.classList.add('active');
+          return;
+      }
+
+      const oldSlide = slideshow.querySelector('.slide.active');
+      const oldText = slideshow.querySelector('.slide-text.active');
+
+      const slide = document.createElement('div');
+      slide.className = 'slide';
+      slide.style.backgroundImage = `url('${images[current]}')`;
+      slideshow.appendChild(slide);
+
+      const text = document.createElement('div');
+      text.className = 'slide-text';
+      text.textContent = messages[current];
+      if (current === images.length - 1) text.classList.add('pulse');
+      slideshow.appendChild(text);
+
+      setTimeout(() => {
+          slide.classList.add('active');
+          text.classList.add('active');
+          if(oldSlide) oldSlide.classList.remove('active');
+          if(oldText) oldText.classList.remove('active');
+          setTimeout(() => {
+              if(oldSlide) oldSlide.remove();
+              if(oldText) oldText.remove();
+          }, 2000); // remove after transition
+      }, 100);
+
+      current++;
+    }
+
+    function startSlideshow() {
+        current = 0;
+        finalMessage.classList.remove('active');
+        showSlide();
+        slideshowInterval = setInterval(showSlide, 4600);
+    }
+
+    replayBtn.addEventListener('click', startSlideshow);
+
+    startSlideshow();
+  </script>
+
 </body>
 </html>
